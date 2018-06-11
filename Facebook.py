@@ -10,20 +10,28 @@ import requests
 #import sys
 import time
 import json
+import csv
 
 
 
-def read_page(url,page,token):
+def read_page(page,token,posts):
 
-    link = url%(page,token)
-    response = requests.get(link)
+    fields = 'posts, id, data'
 
-    result  = response.json()
-    print(result)
+    url = 'https://graph.facebook.com/v3.0/%s?fields=%s?access_token=%s' % (page,fields,token)
+
+    #link = url%(page,token)
+    response = requests.get(url)
+
+    posts = ['posts']
+
+    for post in posts:
+        post  = response.json()
+        print(post)
 
     check = response.status_code
 
-        if (check != 200):
+    if (check != 200):
             error_log = open('log.txt', 'w')
             error_log.write = 'error'
             time.sleep(10)
@@ -36,15 +44,19 @@ def read_page(url,page,token):
 
 if __name__ == "__main__":
 
-    url = "https://graph.facebook.com/v3.0/%s?fields=%s?acess_token"
+    #url = 'https://graph.facebook.com/v3.0/%s?fields=%s?access_token=%s' % ['pages']['data']
     page = "spottedUFRJresiste"
-    api_key =  "EAACEdEose0cBALZCT3DxD7C4c06fSzmMMkGT1w5iR4kLGdqkjeyfhBkTIjTbQ8uAivJJ2x2zC1umikV9C0qTOs1ZC9FtRzIgp0b7f2jQYQPk1Vpegg3B4Vgcxon8wEJcd3Ik6pD8uawJURunrqmfxwN2XKhRQlFOMIhNeiWUGDZAjLZA8Lm0DkgmHeuqFB0ZD"
-    result = 0
+    token  =  "EAACEdEose0cBALZCT3DxD7C4c06fSzmMMkGT1w5iR4kLGdqkjeyfhBkTIjTbQ8uAivJJ2x2zC1umikV9C0qTOs1ZC9FtRzIgp0b7f2jQYQPk1Vpegg3B4Vgcxon8wEJcd3Ik6pD8uawJURunrqmfxwN2XKhRQlFOMIhNeiWUGDZAjLZA8Lm0DkgmHeuqFB0ZD"
+    post = 0
 
-    read_page(url,page,token,result)
+    #read_page(page,token,post)
 
-    text = open('json_text.txt', 'w')
-    text.write(result['posts']['data'])
-    text.close()
+    posts = ['posts']
+
+    for post in posts  :
+        read_page(page,token,post)
+        text = open('json_text.txt', 'w')
+        text.write(result['posts']['data'][post]['id'])
+        text.close()
 
     main()
