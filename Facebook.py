@@ -11,21 +11,40 @@ import requests
 import time
 import json
 
-def read_article(url):
-    response = requests.get(url)
-    print (response.json())
+
+
+def read_page(url,page,token):
+
+    link = url%(page,token)
+    response = requests.get(link)
+
+    result  = response.json()
+    print(result)
+
+    check = response.status_code
+
+        if (check != 200):
+            error_log = open('log.txt', 'w')
+            error_log.write = 'error'
+            time.sleep(10)
+
+
+    error_log.close()
 
 
 
-def timestamp():
 
+if __name__ == "__main__":
 
+    url = "https://graph.facebook.com/v3.0/%s?fields=%s?acess_token"
+    page = "spottedUFRJresiste"
+    api_key =  "EAACEdEose0cBALZCT3DxD7C4c06fSzmMMkGT1w5iR4kLGdqkjeyfhBkTIjTbQ8uAivJJ2x2zC1umikV9C0qTOs1ZC9FtRzIgp0b7f2jQYQPk1Vpegg3B4Vgcxon8wEJcd3Ik6pD8uawJURunrqmfxwN2XKhRQlFOMIhNeiWUGDZAjLZA8Lm0DkgmHeuqFB0ZD"
+    result = 0
 
-'''if __name__ == "__main__":
+    read_page(url,page,token,result)
 
-    url =
-    token =
-    page  =
+    text = open('json_text.txt', 'w')
+    text.write(result['posts']['data'])
+    text.close()
 
-
-        main()'''
+    main()
