@@ -49,8 +49,8 @@ def convert_to_csv():
 if __name__ == "__main__":
 
     #url = 'https://graph.facebook.com/v3.0/%s?fields=%s?access_token=%s' % ['pages']['data']
-    page = "spottedUFRJresiste"
-    token  =  "EAACEdEose0cBALZCT3DxD7C4c06fSzmMMkGT1w5iR4kLGdqkjeyfhBkTIjTbQ8uAivJJ2x2zC1umikV9C0qTOs1ZC9FtRzIgp0b7f2jQYQPk1Vpegg3B4Vgcxon8wEJcd3Ik6pD8uawJURunrqmfxwN2XKhRQlFOMIhNeiWUGDZAjLZA8Lm0DkgmHeuqFB0ZD"
+    page = ""
+    token  =  ""
     field = 0
     post = 0
 
