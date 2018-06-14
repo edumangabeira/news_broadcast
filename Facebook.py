@@ -2,9 +2,7 @@
 
 #Eduardo Freire Mangabeira, UFRJ undergraduate student, 2018-06-11
 #github:edumangabeira
-#Consuming facebook API to acess pages or groups
-
-
+#Consuming facebook API to acess a page and gather its data.
 
 import requests
 #import sys
@@ -12,11 +10,10 @@ import time
 import json
 import csv
 
-
-
-def read_page(page,token,posts):
-
-    fields = 'posts, id, data'
+'''
+reads the facebook page content and gains access to its posts texts
+'''
+def read_page(page,fields,token,posts):
 
     url = 'https://graph.facebook.com/v3.0/%s?fields=%s?access_token=%s' % (page,fields,token)
 
@@ -36,27 +33,34 @@ def read_page(page,token,posts):
             error_log.write = 'error'
             time.sleep(10)
 
-
     error_log.close()
+'''
+converts the gathered data to a .csv file
+'''
+def convert_to_csv():
 
+    with open('night_posts.csv', 'w') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(['post','shares','comments','likes'])
 
-
+        for linha in lista_final:
+            writer.writerow(linha)
 
 if __name__ == "__main__":
 
     #url = 'https://graph.facebook.com/v3.0/%s?fields=%s?access_token=%s' % ['pages']['data']
     page = "spottedUFRJresiste"
     token  =  "EAACEdEose0cBALZCT3DxD7C4c06fSzmMMkGT1w5iR4kLGdqkjeyfhBkTIjTbQ8uAivJJ2x2zC1umikV9C0qTOs1ZC9FtRzIgp0b7f2jQYQPk1Vpegg3B4Vgcxon8wEJcd3Ik6pD8uawJURunrqmfxwN2XKhRQlFOMIhNeiWUGDZAjLZA8Lm0DkgmHeuqFB0ZD"
+    field = 0
     post = 0
 
-    #read_page(page,token,post)
+    fields = 'posts,page,id'
+    field_posts = ['posts']
 
-    posts = ['posts']
-
-    for post in posts  :
+    for field in field_posts:
         read_page(page,token,post)
         text = open('json_text.txt', 'w')
-        text.write(result['posts']['data'][post]['id'])
+        text.write(post['posts']['data'][field]['id'])
         text.close()
 
     main()
